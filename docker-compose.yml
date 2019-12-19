@@ -1,0 +1,54 @@
+version: "3"
+
+services:
+  redis:
+    image: redis:latest
+    restart: always
+    ports:
+      - 6379:6379
+  db:
+    image: mariadb:latest
+    restart: always
+    container_name: db
+    ports:
+      - 3306:3306
+    volumes:
+    - db-data:/var/lib/mysql
+    - ./mysql/init.sql:/data/init.sql
+    command: --default-authentication-plugin=mysql_native_password --init-file /data/init.sql
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: laravel
+    networks:
+      - default
+  web:
+    image: nginx:latest
+    restart: always
+    volumes:
+    - ../:/var/www/html/
+    - ./nginx/site.conf:/etc/nginx/conf.d/site.conf
+    ports:
+      - 80:80
+    depends_on:
+      - php
+  php:
+    build: './php'
+    container_name: laravel.local
+    volumes:
+      - ../:/var/www/html/
+    ports:
+      - 9000:9000
+  mail:
+    image: 'mailhog/mailhog'
+    restart: always
+    container_name: mailhog
+    ports:
+      - 1025:1025
+      - 8025:8025
+    networks:
+      - default
+volumes:
+  db-data:
+    driver: local
+networks:
+  default:
