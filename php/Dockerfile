@@ -24,8 +24,7 @@ ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
 
 # Install xdebug, not enabled yet.
-RUN docker-php-ext-install pdo_mysql
-#RUN docker-php-ext-enable pdo_mysql
+RUN docker-php-ext-install pdo_mysql bcmath
 
 # Install Composer.
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir /usr/bin --filename composer
