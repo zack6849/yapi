@@ -8,7 +8,6 @@ You'll want to add this as a submodule to your project, eg:
 git submodule add git@github.com:zack6849/yapi.git
 ```
 
-You'll also want to make sure to define a host of laravel.local in your hosts file that maps to your local machine.
 If you're using a unix system and your UID and GID aren't both 1000, create a .env file in this directory, and give it the following contents:
 
 ```shell
