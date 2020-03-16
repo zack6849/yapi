@@ -5,9 +5,8 @@ RUN curl -sL https://deb.nodesource.com/setup_13.x | bash -
 # Install yarn repo
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
 RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
-RUN apt-get update
 # Install mysql-client, git, node golang (for mhsendmail), etc.
-RUN apt-get install -y libzip-dev libpng-dev zlib1g-dev locales libicu-dev mariadb-client git nodejs golang yarn vim nano unzip sudo
+RUN apt-get update && apt-get install -y libzip-dev libpng-dev zlib1g-dev locales libicu-dev mariadb-client git nodejs golang yarn vim nano unzip sudo
 # Install mhsendmail (to send mail to mailhog)
 RUN go get github.com/mailhog/mhsendmail
 RUN cp /root/go/bin/mhsendmail /usr/bin/mhsendmail
@@ -23,6 +22,7 @@ ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
 
+RUN pecl install xdebug-2.8.1 && docker-php-ext-enable xdebug
 # Install xdebug, not enabled yet.
 RUN docker-php-ext-install pdo_mysql bcmath zip gd intl
 
@@ -31,6 +31,7 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir /usr/bin -
 RUN composer --version
 
 COPY laravel_sudoers /etc/sudoers.d/
+COPY docker-php-ext-xdebug.ini /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 RUN chmod 0440 /etc/sudoers.d/laravel_sudoers
 
 # Create Laravel User
