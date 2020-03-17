@@ -38,6 +38,8 @@ services:
       - ../:/var/www/html/
     ports:
       - 9001:9000
+    extra_hosts:
+      - 'host.docker.internal:172.17.0.1'
   mail:
     image: 'mailhog/mailhog'
     restart: always

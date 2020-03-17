@@ -6,7 +6,7 @@ RUN curl -sL https://deb.nodesource.com/setup_13.x | bash -
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
 RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
 # Install mysql-client, git, node golang (for mhsendmail), etc.
-RUN apt-get update && apt-get install -y libzip-dev libpng-dev zlib1g-dev locales libicu-dev mariadb-client git nodejs golang yarn vim nano unzip sudo
+RUN apt-get update && apt-get install -y libzip-dev libpng-dev zlib1g-dev locales libicu-dev mariadb-client git nodejs golang yarn vim nano unzip sudo iproute2 inetutils-ping
 # Install mhsendmail (to send mail to mailhog)
 RUN go get github.com/mailhog/mhsendmail
 RUN cp /root/go/bin/mhsendmail /usr/bin/mhsendmail
@@ -43,3 +43,6 @@ RUN addgroup -gid ${PGID} laravel
 RUN useradd -Nms /bin/bash laravel --uid ${PUID} -G laravel,sudo
 USER laravel
 WORKDIR /var/www/html
+
+COPY docker-php-entrypoint.sh /usr/local/bin/
+#ENTRYPOINT ["ocker-php-entrypoint.sh"]
