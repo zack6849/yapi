@@ -11,8 +11,6 @@ RUN apt-get update && apt-get install -y libldap2-dev libzip-dev libfreetype6-de
 RUN go get github.com/mailhog/mhsendmail
 RUN cp /root/go/bin/mhsendmail /usr/bin/mhsendmail
 
-# Copy mailhog.ini to php conf directory
-COPY mailhog.ini /usr/local/etc/php/conf.d/
 
 # Set Locale, LANG and Timezone
 RUN rm /etc/localtime
@@ -32,7 +30,12 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir /usr/bin -
 RUN composer --version
 
 COPY laravel_sudoers /etc/sudoers.d/
-COPY docker-php-ext-xdebug.ini /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+# Xdebug Configuration
+COPY docker-php-ext-xdebug.ini /usr/local/etc/php/conf.d/
+# Mailhog php configuration
+COPY mailhog.ini /usr/local/etc/php/conf.d/
+# Other Misc PHP configuration
+COPY docker-php-yapi.ini /usr/local/etc/php/conf.d/
 RUN chmod 0440 /etc/sudoers.d/laravel_sudoers
 
 # Create Laravel User
