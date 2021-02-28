@@ -1,7 +1,7 @@
 FROM php:7-fpm
 
-# Setup NodeSource 13.x Repositories
-RUN curl -sL https://deb.nodesource.com/setup_13.x | bash -
+# Setup NodeSource 15.x Repositories
+RUN curl -sL https://deb.nodesource.com/setup_15.x | bash -
 # Install yarn repo
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
 RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
