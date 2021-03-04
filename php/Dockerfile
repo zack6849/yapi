@@ -6,7 +6,7 @@ RUN curl -sL https://deb.nodesource.com/setup_15.x | bash -
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
 RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
 # Install mysql-client, git, node golang (for mhsendmail), etc.
-RUN apt-get update && apt-get install -y libldap2-dev libzip-dev libfreetype6-dev libpng-dev libjpeg62-turbo-dev zlib1g-dev locales libicu-dev mariadb-client git nodejs golang yarn vim nano unzip sudo iproute2 inetutils-ping redis
+RUN apt-get update && apt-get install -y pv libldap2-dev libzip-dev libfreetype6-dev libpng-dev libjpeg62-turbo-dev zlib1g-dev locales libicu-dev mariadb-client git nodejs golang yarn vim nano unzip sudo iproute2 inetutils-ping redis
 # Install mhsendmail (to send mail to mailhog)
 RUN go get github.com/mailhog/mhsendmail
 RUN cp /root/go/bin/mhsendmail /usr/bin/mhsendmail
