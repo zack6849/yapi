@@ -25,7 +25,7 @@ services:
     image: nginx:latest
     restart: always
     volumes:
-      - ../:/var/www/html/
+      - ../:/var/www/html
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
     ports:
       - '127.0.0.1:80:80'
@@ -35,7 +35,7 @@ services:
     build: './php'
     container_name: laravel.local
     volumes:
-      - ../:/var/www/html/
+      - ../:/var/www/html
     ports:
       - '127.0.0.1:9001:9000'
     extra_hosts:
